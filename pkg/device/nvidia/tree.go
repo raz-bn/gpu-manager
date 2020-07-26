@@ -37,7 +37,7 @@ const (
 	//MaxProcess is the Maximum number of process in one device.
 	MaxProcess = 64
 	//NamePattern is the name pattern of nvidia device.
-	NamePattern = "/dev/nvidia%d"
+	NamePattern = "/run/nvidia/driver/dev/nvidia%d"
 	one         = uint32(1)
 	levelStep   = 10
 	//HundredCore represents 100 virtual cores.

@@ -47,7 +47,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	algo := NewFragmentMode(tree)
 
 	expectCase1 := []string{
-		"/dev/nvidia4", "/dev/nvidia5",
+		"/run/nvidia/driver/dev/nvidia4", "/run/nvidia/driver/dev/nvidia5",
 	}
 
 	cores := int64(2 * nvidia.HundredCore)
@@ -63,7 +63,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	}, cores, 0)
 
 	expectCase2 := []string{
-		"/dev/nvidia5",
+		"/run/nvidia/driver/dev/nvidia5",
 	}
 
 	cores = int64(nvidia.HundredCore)
@@ -86,7 +86,7 @@ GPU0   x`
 	algo := NewFragmentMode(tree)
 
 	expectCase1 := []string{
-		"/dev/nvidia0",
+		"/run/nvidia/driver/dev/nvidia0",
 	}
 
 	cores := int64(nvidia.HundredCore)

@@ -48,16 +48,16 @@ func NewDummyAllocator(_ *config.Config, _ device.GPUTree, _ kubernetes.Interfac
 	return &DummyAllocator{}
 }
 
-//Allocate returns /dev/fuse for dummy device
+//Allocate returns /run/nvidia/driver/dev/fuse for dummy device
 func (ta *DummyAllocator) Allocate(_ context.Context, reqs *pluginapi.AllocateRequest) (*pluginapi.AllocateResponse, error) {
 	resps := &pluginapi.AllocateResponse{}
 	for range reqs.ContainerRequests {
 		resps.ContainerResponses = append(resps.ContainerResponses, &pluginapi.ContainerAllocateResponse{
 			Devices: []*pluginapi.DeviceSpec{
 				{
-					// We use /dev/fuse for dummy device
-					ContainerPath: "/dev/fuse",
-					HostPath:      "/dev/fuse",
+					// We use /run/nvidia/driver/dev/fuse for dummy device
+					ContainerPath: "/run/nvidia/driver/dev/fuse",
+					HostPath:      "/run/nvidia/driver/dev/fuse",
 					Permissions:   "mrw",
 				},
 			},

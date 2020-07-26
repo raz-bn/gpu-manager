@@ -25,7 +25,7 @@ import (
 
 const (
 	DefaultDriver                   = "nvidia"
-	DefaultQueryPort                = 5678
+	DefaultQueryPort                = 9400
 	DefaultSamplePeriod             = 1
 	DefaultVirtualManagerPath       = "/etc/gpu-manager/vm"
 	DefaultAllocationCheckPeriod    = 30

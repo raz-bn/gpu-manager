@@ -41,10 +41,10 @@ const (
 )
 
 const (
-	NvidiaCtlDevice    = "/dev/nvidiactl"
-	NvidiaUVMDevice    = "/dev/nvidia-uvm"
-	NvidiaFullpathRE   = `^/dev/nvidia([0-9]*)$`
-	NvidiaDevicePrefix = "/dev/nvidia"
+	NvidiaCtlDevice    = "/run/nvidia/driver/dev/nvidiactl"
+	NvidiaUVMDevice    = "/run/nvidia/driver/dev/nvidia-uvm"
+	NvidiaFullpathRE   = `^/run/nvidia/driver/dev/nvidia([0-9]*)$`
+	NvidiaDevicePrefix = "/run/nvidia/driver/dev/nvidia"
 )
 
 const (

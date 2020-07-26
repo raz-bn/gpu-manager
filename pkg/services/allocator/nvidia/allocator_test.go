@@ -98,19 +98,19 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 		{
 			PodName: "pending",
 			PodUID:  "pending-uid",
-			Device:  "/dev/nvidia0",
+			Device:  "/run/nvidia/driver/dev/nvidia0",
 			Phase:   string(v1.PodPending),
 		},
 		{
 			PodName: "failed",
 			PodUID:  "failed-uid",
-			Device:  "/dev/nvidia1",
+			Device:  "/run/nvidia/driver/dev/nvidia1",
 			Phase:   string(v1.PodFailed),
 		},
 		{
 			PodName: "containerExited",
 			PodUID:  "contaienrExited-uid",
-			Device:  "/dev/nvidia2",
+			Device:  "/run/nvidia/driver/dev/nvidia2",
 			ContainerStatus: []v1.ContainerStatus{
 				{
 					State: v1.ContainerState{
@@ -124,7 +124,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 		{
 			PodName: "pending",
 			PodUID:  "pending-uid",
-			Device:  "/dev/nvidia0",
+			Device:  "/run/nvidia/driver/dev/nvidia0",
 			Phase:   string(v1.PodPending),
 			ContainerStatus: []v1.ContainerStatus{
 				{
@@ -237,7 +237,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 		n.Meta.TotalMemory = 1024 * 1024 * 1024
 	}
 	for i := 0; i < 6; i++ {
-		node := expectTree.Query("/dev/nvidia" + strconv.Itoa(i))
+		node := expectTree.Query("/run/nvidia/driver/dev/nvidia" + strconv.Itoa(i))
 		expectTree.MarkOccupied(node, 100, 1*types.MemoryBlockSize)
 	}
 	t.Logf("expectTree graph: %s", expectTree.PrintGraph())
@@ -448,7 +448,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 		n.Meta.TotalMemory = 1024 * 1024 * 1024
 	}
 	for i := 0; i < 6; i++ {
-		node := expectTree.Query("/dev/nvidia" + strconv.Itoa(i))
+		node := expectTree.Query("/run/nvidia/driver/dev/nvidia" + strconv.Itoa(i))
 		expectTree.MarkOccupied(node, 100, 1*types.MemoryBlockSize)
 	}
 	t.Logf("expectTree graph: %s", expectTree.PrintGraph())

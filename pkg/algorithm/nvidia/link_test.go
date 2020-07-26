@@ -47,9 +47,9 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	algo := NewLinkMode(tree)
 
 	expectCase1 := []string{
-		"/dev/nvidia0",
-		"/dev/nvidia1",
-		"/dev/nvidia2",
+		"/run/nvidia/driver/dev/nvidia0",
+		"/run/nvidia/driver/dev/nvidia1",
+		"/run/nvidia/driver/dev/nvidia2",
 	}
 
 	cores := int64(3 * nvidia.HundredCore)
@@ -65,8 +65,8 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	}, cores, 0)
 
 	expectCase2 := []string{
-		"/dev/nvidia0",
-		"/dev/nvidia1",
+		"/run/nvidia/driver/dev/nvidia0",
+		"/run/nvidia/driver/dev/nvidia1",
 	}
 
 	cores = int64(2 * nvidia.HundredCore)

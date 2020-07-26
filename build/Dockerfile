@@ -64,9 +64,10 @@ ENV PATH=$PATH:/usr/local/nvidia/bin
 VOLUME ["/sys/fs/cgroup"]
 
 # display
-EXPOSE 5678
+EXPOSE 9400
 
 COPY start.sh /
 COPY copy-bin-lib.sh /
+COPY getallprocess.sh /usr/bin/
 
 CMD ["/start.sh"]
