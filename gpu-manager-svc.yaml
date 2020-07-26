@@ -1,18 +1,71 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gpu-manager-metric
-  namespace: kube-system
+  name: gpu-manager
+  namespace: gpu-manager
   annotations:
     prometheus.io/scrape: "true"
   labels:
-    kubernetes.io/cluster-service: "true"
+    app: gpu-manager
 spec:
-  clusterIP: None
   ports:
     - name: metrics
       port: 9400
       protocol: TCP
       targetPort: 9400
   selector:
-    name: gpu-manager-ds
+      app: gpu-manager
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gpu-manager
+  namespace: gpu-manager
+  labels:
+    app: gpu-manager
+spec:
+  endpoints:
+  - port: metrics
+    path: "/metrics"
+  jobLabel: app
+  namespaceSelector:
+    matchNames:
+    - gpu-manager
+  selector:
+    matchLabels:
+     app: gpu-manager
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: prometheus-k8s
+  namespace: gpu-manager
+  labels:
+    app: gpu-manager
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - services
+  - endpoints
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prometheus-k8s
+  namespace: gpu-manager
+  labels:
+    app: gpu-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: prometheus-k8s
+subjects:
+- kind: ServiceAccount
+  name: prometheus-k8s
+  namespace: openshift-monitoring

@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: gpu-manager-daemonset
-  namespace: kube-system
+  name: gpu-manager
+  namespace: gpu-manager
 spec:
   updateStrategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      name: gpu-manager-ds
+      name: gpu-manager
   template:
     metadata:
       # This annotation is deprecated. Kept here for backward compatibility
@@ -16,7 +16,7 @@ spec:
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ""
       labels:
-        name: gpu-manager-ds
+        name: gpu-manager
     spec:
       serviceAccount: gpu-manager
       tolerations:
@@ -34,10 +34,10 @@ spec:
       priorityClassName: "system-node-critical"
       # only run node hash gpu device
       nodeSelector:
-        nvidia-device-enable: enable
+        feature.node.kubernetes.io/pci-10de.present: "true"
       hostPID: true
       containers:
-        - image: tkestack/gpu-manager:1.0.3
+        - image: razbne/gpu-manager:1.3.0
           imagePullPolicy: Always
           name: gpu-manager
           securityContext:
@@ -63,9 +63,9 @@ spec:
               readOnly: true
           env:
             - name: LOG_LEVEL
-              value: "4"
+              value: "5"
             - name: EXTRA_FLAGS
-              value: "--logtostderr=false"
+              value: "--logtostderr=false --container-runtime-endpoint=/var/run/crio/crio.sock --cgroup-driver=systemd"
             - name: NODE_NAME
               valueFrom:
                 fieldRef:
@@ -102,4 +102,4 @@ spec:
         - name: usr-directory
           hostPath:
             type: Directory
-            path: /usr
+            path: /run/nvidia/driver/usr
