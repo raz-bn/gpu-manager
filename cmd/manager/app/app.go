@@ -82,8 +82,7 @@ func Run(opt *options.Options) error {
 	srv := server.NewManager(cfg)
 	go srv.Run()
 
-	retries := 0
-	for !srv.Ready() && retries < 10 {
+	for !srv.Ready() {
 		klog.Infof("Wait for internal server ready")
 		time.Sleep(time.Second)
 		retries++
