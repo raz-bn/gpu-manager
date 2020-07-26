@@ -11,8 +11,8 @@ spec:
   clusterIP: None
   ports:
     - name: metrics
-      port: 5678
+      port: 9400
       protocol: TCP
-      targetPort: 5678
+      targetPort: 9400
   selector:
     name: gpu-manager-ds

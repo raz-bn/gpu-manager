@@ -43,7 +43,7 @@ spec:
           securityContext:
             privileged: true
           ports:
-            - containerPort: 5678
+            - containerPort: 9400
           volumeMounts:
             - name: device-plugin
               mountPath: /var/lib/kubelet/device-plugins
