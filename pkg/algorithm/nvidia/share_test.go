@@ -51,7 +51,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	algo := NewShareMode(tree)
 
 	expectCase1 := []string{
-		"/dev/nvidia0",
+		"/run/nvidia/driver/dev/nvidia0",
 	}
 
 	cores := int64(0.5 * nvidia.HundredCore)
@@ -67,7 +67,7 @@ GPU5     SOC     SOC     SOC     SOC     PIX      X
 	}, cores, 0)
 
 	expectCase2 := []string{
-		"/dev/nvidia1",
+		"/run/nvidia/driver/dev/nvidia1",
 	}
 
 	cores = int64(0.6 * nvidia.HundredCore)

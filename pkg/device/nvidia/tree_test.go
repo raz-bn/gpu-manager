@@ -96,7 +96,7 @@ func testTree(t *testing.T, testCase string, nodeNum int) {
 	}
 
 	//test Query()
-	if len(leaves) > 0 && tree.Query("/dev/nvidia0") != leaves[0] {
+	if len(leaves) > 0 && tree.Query("/run/nvidia/driver/dev/nvidia0") != leaves[0] {
 		t.Fatalf("method Query get wrong node")
 	}
 }
