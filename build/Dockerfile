@@ -68,5 +68,6 @@ EXPOSE 9400
 
 COPY start.sh /
 COPY copy-bin-lib.sh /
+COPY getallprocess.sh /usr/bin/
 
 CMD ["/start.sh"]

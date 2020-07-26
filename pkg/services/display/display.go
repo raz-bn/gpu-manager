@@ -24,6 +24,9 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"os/exec"
+	"bufio"
+	"strconv"
 
 	displayapi "tkestack.io/gpu-manager/pkg/api/runtime/display"
 	"tkestack.io/gpu-manager/pkg/config"
@@ -143,12 +146,17 @@ func (disp *Display) getPodUsage(pod *v1.Pod) map[string]*displayapi.Devices {
 			klog.Errorf("can't get pids form container %s, %v", contID, err)
 			continue
 		}
+		FullPidInContainer, err := disp.getFullPidList(pidsInContainer)
+		if err != nil {
+			klog.Errorf("can't get pids form container %s, %v", contID, err)
+			continue
+		}
 		_, _, deviceNames := utils.GetGPUData(containerInfo.Annotations)
 		devicesUsage := make([]*displayapi.DeviceInfo, 0)
 		for _, deviceName := range deviceNames {
 			if utils.IsValidGPUPath(deviceName) {
 				node := disp.tree.Query(deviceName)
-				if usage := disp.getDeviceUsage(pidsInContainer, node.Meta.ID); usage != nil {
+				if usage := disp.getDeviceUsage(FullPidInContainer, node.Meta.ID); usage != nil {
 					devicesUsage = append(devicesUsage, usage)
 				}
 			}
@@ -162,6 +170,28 @@ func (disp *Display) getPodUsage(pod *v1.Pod) map[string]*displayapi.Devices {
 	}
 
 	return podUsage
+}
+
+func (disp *Display) getFullPidList(pidsInCont []int) ([]int, error) {
+	var fullPidList []int
+	for _, pid := range pidsInCont{
+		stringpid := strconv.Itoa(pid)
+		cmd := exec.Command("/bin/sh", "getallprocess.sh", stringpid)
+		stdout, err := cmd.Output()
+		if err != nil{
+			return nil, err
+		}
+		scanner := bufio.NewScanner(strings.NewReader(string(stdout)))
+		for scanner.Scan(){
+			strippedpid := strings.Replace(scanner.Text(), " ", "", -1)
+			intpid, err := strconv.Atoi(strippedpid)
+			if err != nil{
+				return nil, err
+			}
+			fullPidList = append(fullPidList,intpid)
+		}
+	}
+	return fullPidList, nil
 }
 
 //Version returns version of GPU manager
