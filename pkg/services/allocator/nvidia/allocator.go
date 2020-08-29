@@ -549,10 +549,10 @@ func (ta *NvidiaTopoAllocator) allocateOne(pod *v1.Pod, container *v1.Container,
 	}
 
 	// LD_LIBRARY_PATH
-	ctntResp.Envs["LD_LIBRARY_PATH"] = "/usr/local/nvidia/lib64"
+	ctntResp.Envs["LD_LIBRARY_PATH"] = "/usr/local/nvidia/lib64:/usr/local/lib64:/lib64:/usr/lib64"
 	for _, env := range container.Env {
 		if env.Name == "compat32" && strings.ToLower(env.Value) == "true" {
-			ctntResp.Envs["LD_LIBRARY_PATH"] = "/usr/local/nvidia/lib"
+			ctntResp.Envs["LD_LIBRARY_PATH"] = "/usr/local/nvidia/lib:/usr/local/lib:/lib:/usr/lib"
 		}
 	}
 
