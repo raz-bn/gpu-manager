@@ -31,7 +31,7 @@ import (
 )
 
 const (
-	gpuModelLabel = "gaia.tencent.com/gpu-model"
+	gpuModelLabel = "gaia.dana.794/gpu-model"
 )
 
 type labelFunc interface {
